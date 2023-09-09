@@ -1,0 +1,5 @@
+# ignore all folders output in c and c++
+*output/
+*output/*
+output/
+output/*
