@@ -13,12 +13,19 @@ struct PERSONA // Aqui se declara la estructura de datos
 int main()
 {
 
-  struct PERSONA empleado = { 12345678, "Perez, Juan", 'M', 1, 1, 1980 };
+  struct PERSONA jefe = { 12345678, "Perez, Juan", 'M', 1, 1, 1980 };
+  struct PERSONA empleados[10];
 
-  printf("DNI: %ld\n", empleado.DNI);
-  printf("Apellido y Nombre: %s\n", empleado.ApellNombre);
-  printf("Sexo: %c\n", empleado.Sexo);
-  printf("Fecha de Nacimiento: %d/%d/%d\n", empleado.DiaNacimiento, empleado.MesNacimiento, empleado.AnioNacimiento);
+  for (int i = 0; i < 10; i++)
+  {
+    printf("\nIngrese el dni: ");
+    scanf("%d", &empleados[i].DNI);
+
+    printf("\nIngrese el sexo: ");
+    scanf(" %c", &empleados[i].Sexo);
+  }
+
+
 
   return 0;
 }
