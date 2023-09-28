@@ -5,6 +5,7 @@ Indice:
   - [Ejercicio 3.1](#ejercicio-31)
   - [Ejercicio 3.2](#ejercicio-32)
   - [Ejercicio 3.3](#ejercicio-33)
+  - [Ejercicio 3.4](#ejercicio-34)
 
 
 ## UNIDAD 3 - Archivos Secuenciales
@@ -50,3 +51,16 @@ Para modificar un precio se ingresa por teclado el código del producto y el nue
 Al finalizar:
   1. Actualizar el archivo de productos con los nuevos precios.
   2. Exportar a un archivo con formato de texto (.csv) para que la lista de precios pueda ser visualizada directamente utilizando un programa de planillas de cálculo como por ejemplo el Excel.
+
+---
+
+### Ejercicio 3.4
+
+Realizar un programa que permite actualizar una lista de precios en forma masiva, ingresando un porcentaje
+de incremento. El archivo original se llama precios.dat y fue generado utilizando la siguiente estructura:
+- Código (entero)
+- Precio (float)
+- Descripción (de hasta 50 caracteres)
+
+No se sabe la cantidad de registros del archivo.
+Se solicita generar un nuevo archivo llamado __*Precios_actualizados.dat.*__
