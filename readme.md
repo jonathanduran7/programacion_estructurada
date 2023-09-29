@@ -6,6 +6,7 @@ Indice:
   - [Ejercicio 3.2](#ejercicio-32)
   - [Ejercicio 3.3](#ejercicio-33)
   - [Ejercicio 3.4](#ejercicio-34)
+  - [Ejercicio 3.5](#ejercicio-35)
 
 
 ## UNIDAD 3 - Archivos Secuenciales
@@ -64,3 +65,24 @@ de incremento. El archivo original se llama precios.dat y fue generado utilizand
 
 No se sabe la cantidad de registros del archivo.
 Se solicita generar un nuevo archivo llamado __*Precios_actualizados.dat.*__
+
+### Ejercicio 3.5
+
+Se dispone de un archivo llamado Stock.dat que contiene la informacion de los 10 productos que vende una fábrica. En el archivo se guarda:
+- Código de artículo (entero)
+- Descripción (50 caracteres máximo)
+- Stock (entero)
+
+Luego se ingresan por teclado las ventas a realizar indicando:
+- Código de artículo
+- Cantidad
+
+La carga por teclado de las ventas finaliza con un código de artículo igual a 0.
+
+Por cada venta se debe controlar si hay stock suficiente y si lo hay, restar el stck de dicho producto, sino hay stock se debe vender lo que quede disponible y grabar un registro en un archivo Faltantes.dat con la cantidad que no pudo venderse, dicho registro debe contener:
+- Código de artículo
+- Cantidad
+
+Se genera un registro por cada venta que no pudo concretarse, pudiendo quedar en el archivo varios registros faltantes del mismo producto.
+
+Al finalizar actualizar el archivo Stock.dat con el stock actualizando luego de procesar las ventas.
