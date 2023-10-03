@@ -86,3 +86,33 @@ Por cada venta se debe controlar si hay stock suficiente y si lo hay, restar el 
 Se genera un registro por cada venta que no pudo concretarse, pudiendo quedar en el archivo varios registros faltantes del mismo producto.
 
 Al finalizar actualizar el archivo Stock.dat con el stock actualizando luego de procesar las ventas.
+
+----
+
+### Ejercicio 3.16
+Se dispone de un archivo ventas.dat con el siguiente formato:
+- Código de producto (alfanumérico 10 caracteres)
+- Código de vendedor (entero 1 a 5)
+- Cantidad (entero)
+
+El archivo puede contener mas de una venta para el mismo producto/vendedor. Luego se dispone de un segundo archivo llamado productos.dat que contiene:
+- Código de producto (alfanumérico 10 caracteres)
+- Precio de venta (float)
+
+Como máximo hay 15 productos.
+
+a. Se desea mostrar la cantidad de ventas realizada por cada vendedor de cada producto (utilizar una matriz).
+
+b. Registrar nuevas ventas ingresando por teclado:
+- Codigo de producto
+- Codigo de vendedor
+- Cantidad\
+El ingreso por teclado finaliza con vendedor iguala 99.
+
+c. Mostrar nuevamente el listado del punto a actualizado con las nuevas ventas.
+
+d. Mostrar un listado ordenado de mayor a menor por importe de entas mostrando código de vendedor e importe total vendido.
+
+e. Mostrar el/los productos que vendieron menor cantidad de unidades
+
+f. Actualizar el archivo ventas.dat
