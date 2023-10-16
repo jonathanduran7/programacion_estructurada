@@ -116,3 +116,21 @@ d. Mostrar un listado ordenado de mayor a menor por importe de entas mostrando c
 e. Mostrar el/los productos que vendieron menor cantidad de unidades
 
 f. Actualizar el archivo ventas.dat
+
+
+## UNIDAD 4 - Cortes de control
+
+### Ejercicio 4.1
+
+Se dispone de un archivo llamado *Rating.dat* que guarda la informacion de los puntos obtenidos de rating en los distintos programas de canales de cable a lo largo del día. Cada registro contiene:
+- Numero de canal (entero)
+- Programa (texto de 35 caracters máximo)
+- Rating (float)
+
+El archivo se encuentra ordenado por canal. \
+Se solicita informar:
+1. Aquellos canales que obtengan menos de 15 puntos en total.
+2. El canal mas visto
+3. Gerenrar un archivo con el promedio de rating de cada canal que incluya dos campos:
+    - Numero de canal.
+    - Promedio
