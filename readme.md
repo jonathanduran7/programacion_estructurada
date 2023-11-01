@@ -134,3 +134,28 @@ Se solicita informar:
 3. Gerenrar un archivo con el promedio de rating de cada canal que incluya dos campos:
     - Numero de canal.
     - Promedio
+
+### Ejercicio 4.2
+
+Se dispone de un archivo con las ventas del mes de cada una de las sucursales de una empresa. El archivo se
+encuentra ordenado por sucursal y contiene la siguiente estructura:
+- Sucursal (15 caracteres máximo)
+- Código de producto (entero)
+- Cantidad (entero)
+
+Por otro lado, se dispone de un archivo de los productos que vende la empresa y el estado del stock al mes
+pasado con la siguiente estructura:
+- Código de producto (entero)
+- Descripción (20 caracteres máximo)
+- Precio (float)
+- Stock (entero)
+- Punto de pedido (entero)
+- Cantidad para pedido (entero)
+
+No se sabe la cantidad exacta de productos, pero sí se sabe que no hay más de 200. Se desea:
+ 1. Mostrar el importe total vendido en cada sucursal.
+ 2. Mostrar la recaudación total de la empresa en el mes.
+ 3. Determinar la sucursal que vendió mayor cantidad de productos.
+ 4. Actualizar el archivo de productos con el nuevo stock.
+ 5. Realizar un archivo llamado pedidos.dat que incluya aquellos productos que deben solicitarse (código y cantidad) de aquellos productos que al finalizar de procesar las ventas del mes queden
+con stock menor al punto de pedido.
