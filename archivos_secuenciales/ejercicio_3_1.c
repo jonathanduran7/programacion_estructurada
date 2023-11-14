@@ -16,7 +16,7 @@ int main()
   FILE *archivo;
   struct ALUMNO alumno;
 
-  archivo = fopen(PATH_ARCHIVO, "wb");
+  archivo = fopen(LLAMADAS_FILE, "wb");
 
   if (archivo == NULL)
   {
@@ -57,7 +57,7 @@ void LECTURA()
   FILE *archivo;
   struct ALUMNO alumno;
 
-  archivo = fopen(PATH_ARCHIVO, "rb");
+  archivo = fopen(LLAMADAS_FILE, "rb");
 
   if (archivo == NULL)
   {

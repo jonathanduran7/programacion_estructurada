@@ -31,7 +31,7 @@ int main()
 void CargaProductos(struct PRODUCTO productos[])
 {
   FILE *archivo;
-  archivo = fopen(PATH_ARCHIVO, "rb");
+  archivo = fopen(LLAMADAS_FILE, "rb");
 
   if (archivo == NULL)
   {
@@ -109,7 +109,7 @@ int Busqueda(struct PRODUCTO productos[], int codigo, int cant)
 void ActualizarStock(struct PRODUCTO productos[], int cant)
 {
   FILE *archivo;
-  archivo = fopen(PATH_ARCHIVO, "wb");
+  archivo = fopen(LLAMADAS_FILE, "wb");
 
   if (archivo == NULL)
   {

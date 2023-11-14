@@ -21,7 +21,7 @@ int main()
   printf("Ingrese el porcentaje de aumento: ");
   scanf("%d", &porcentaje_aumento);
 
-  if ((archivo = fopen(PATH_ARCHIVO, "rb")) == NULL)
+  if ((archivo = fopen(LLAMADAS_FILE, "rb")) == NULL)
   {
     printf("Error al abrir el archivo.\n");
     exit(1);

@@ -16,7 +16,7 @@ int main()
   struct PRODUCTO aux;
   int cantidad = 0;
 
-  archivo = fopen(PATH_ARCHIVO, "rb");
+  archivo = fopen(LLAMADAS_FILE, "rb");
 
   if (archivo == NULL)
   {
