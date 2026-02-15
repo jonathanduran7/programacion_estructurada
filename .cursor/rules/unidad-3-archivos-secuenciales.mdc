@@ -1,0 +1,62 @@
+---
+description: Contenido oficial Unidad 3 — Archivos secuenciales (fopen, fread, fwrite, feof). Material cátedra Programación Estructurada.
+globs: "**/*.c"
+alwaysApply: false
+---
+
+# Unidad 3 — Archivos secuenciales (material cátedra)
+
+Referencia: *Unidad 3 – Archivos Secuenciales*, material cátedra Programación Estructurada.
+
+## Objetivos
+Almacenar datos en memoria no volátil; construir programas que no pierdan los datos al finalizar. Archivos binarios secuenciales; exportación a texto para planillas.
+
+## 1. Qué es un archivo
+- Colección de datos en memoria secundaria. En C es un concepto lógico (disco, terminal, etc.).
+- **Archivo de texto:** secuencia de caracteres, líneas con `\n`; CSV, XML, JSON para datos estructurados.
+- **Archivo binario:** secuencia de bytes con correspondencia directa con memoria; registros de igual tipo (formato dado por una **estructura** en C). Incluir `<stdio.h>`.
+
+## 2. Acceso
+- Abstracción por **flujos (stream)**; el programa no accede al hardware directamente sino mediante buffer y estructura **FILE** (buffer, descriptor, posición, flags). Funciones que empiezan con “f”.
+
+## 3. Apertura — fopen
+- `FILE *fopen(char nombreArchivo[], char modoApertura[]);`
+- Retorna puntero a FILE; si falla retorna **NULL**. **Siempre comprobar** si el puntero es NULL tras fopen.
+- Ruta: barra invertida se escribe doble `\\`. Sin ruta = misma carpeta del ejecutable (evitar rutas fijas para portabilidad).
+- **Modos secuenciales (esta unidad):**
+  - **rb** — lectura binaria; archivo debe existir.
+  - **wb** — escritura binaria; crea o **destruye** contenido si existe.
+  - **ab** — añadir binario; escribe al final; si no existe lo crea.
+  - **wt** — escritura texto (exportar); destruye si existe.
+- Solo una operación a la vez (lectura o escritura); no volver atrás.
+
+## 4. Cierre — fclose
+- `fclose(pf);` — vuelca buffer al disco y libera recursos. Fallos poco frecuentes pero graves si no se cierra.
+
+## 5. Leer registro — fread
+- `fread(<Dir_Variable>, <nº_bytes>, <cantidadDeRegistros>, <variable_file>);`
+- Lee `<nº_bytes> * <cantidadDeRegistros>` bytes desde el archivo y los deja a partir de `<Dir_Variable>`.
+- Ejemplo: `fread(&num, sizeof(int), 1, fp);` — `fread(reg, sizeof(struct SProducto), 1, fp);` para un registro.
+
+## 6. Escribir registro — fwrite
+- `fwrite(<Dir_Variable>, <nº_bytes>, <cantidadDeRegistros>, <variable_file>);`
+- Escribe en el archivo desde la dirección indicada. Retorna cantidad de “bloques” escritos; si no coincide con lo pedido hubo error.
+- Ejemplo: `fwrite(&reg, sizeof(struct SProducto), 1, fp);`
+
+## 7. Fin de archivo — feof
+- Para leer sin conocer la cantidad de registros: ciclo que lee y procesa mientras no sea fin de archivo. **feof()** devuelve valor distinto de 0 al llegar al final. Usar después de intentar leer (no antes) para no procesar de más.
+
+## 8. Archivos relacionados
+- Abrir varios archivos (ej.: uno de lectura y otro de escritura o resumen); cada uno con su `FILE *` y su `fopen`/`fclose`.
+
+## 9. Uso con estructuras
+- El formato del registro del archivo se define con un struct. Leer/escribir con `sizeof(struct Nombre)` y 1 registro (o N si se lee/escribe en bloque).
+
+## 10. Exportar datos (texto)
+- Abrir con **wt**; usar fprintf para generar líneas legibles o CSV para planillas.
+
+## Errores típicos
+- No comprobar `fp == NULL` después de fopen; no cerrar el archivo en todos los caminos.
+- Abrir con "wb" sin avisar que se pierde el contenido previo.
+- Confundir tamaño en bytes: usar `sizeof(tipo)` o `sizeof(struct Nombre)`.
+- Usar feof antes de leer (da un registro de más).

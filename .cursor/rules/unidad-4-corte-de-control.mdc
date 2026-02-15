@@ -1,0 +1,46 @@
+---
+description: Contenido oficial Unidad 4 — Corte de control. Material cátedra Programación Estructurada.
+globs: "**/*.c"
+alwaysApply: false
+---
+
+# Unidad 4 — Corte de control (material cátedra)
+
+Referencia: *Unidad 4 – Corte de Control*, material cátedra Programación Estructurada.
+
+## Objetivos
+Procesar lotes de datos **ordenados** para obtener reportes o estadísticas. Afianzar estructuras repetitivas, **contadores** y **acumuladores**.
+
+## 1. Qué es el corte de control
+- Proceso sobre registros **ordenados** por uno o más campos; se procesan en subconjuntos (lotes/sub-lotes) al **detectar un cambio** en la/s variable/s de agrupación.
+- Sirve para información **agrupada** por criterios (ej.: por sector, por día, por hora). La información puede mostrarse en pantalla o grabarse en archivo resumen.
+- **Condición necesaria:** datos ordenados u organizados por el campo por el cual se agrupa (todos los del mismo valor juntos). No hace falta orden ascendente/descendente estricto, solo que vengan juntos.
+- **Niveles:** puede haber varios niveles (ej.: corte por día y dentro por hora) si los datos están ordenados por día y dentro por hora.
+
+## 2. Reglas generales (material)
+- Ciclo externo con **condición de fin de datos** (ej.: fin de archivo).
+- Dentro, **un ciclo por cada nivel de corte**, anidados (el de cada nivel dentro del nivel anterior).
+- Las condiciones se **propagan**: el ciclo interno incluye la condición de fin del ciclo que lo contiene más su propia condición.
+- **Lectura:** se lee **antes** de entrar al ciclo de fin de datos y **se vuelve a leer al final** del ciclo más interno (para avanzar al siguiente registro).
+- **Contadores/acumuladores por corte:** se **inicializan al comenzar** el ciclo de ese nivel de corte; se **muestran o graban al salir** de ese ciclo, refiriendo la información al **dato leído anterior** (no al último), porque el ciclo termina cuando cambia el lote.
+
+## 3. Un nivel de corte desde archivo
+- Archivo con registros ordenados por clave (ej.: número de sector).
+- Antes del ciclo principal: inicializar contadores/acumuladores **generales**.
+- Dentro del ciclo “fin de datos”: guardar clave anterior; inicializar contadores/acumuladores **parciales** del corte; ciclo interno “mientras sea la misma clave y no fin de archivo” — dentro se procesa el registro y se hace la **segunda lectura**.
+- Al salir del ciclo del corte: mostrar o grabar totales **del grupo anterior** (clave anterior); acumular en totales generales.
+- Al salir del while principal: cerrar archivo; mostrar totales generales.
+- El ciclo del corte puede ser `do while` o `while` (si es while, la primera vez siempre entra).
+
+## 4. Un nivel generando archivo resumen
+- Mismo esquema, pero al salir del ciclo del corte en lugar de (o además de) mostrar por pantalla se **graba un registro resumen** en otro archivo (ej.: ventas por sucursal). Dos estructuras si los registros de entrada y de resumen son distintos.
+- Puede combinarse con cálculo de máximo/mínimo dentro del lote (ej.: producto con mayor cantidad vendida en la sucursal).
+
+## 5. Dos niveles de corte
+- Datos ordenados por dos criterios (ej.: día, luego hora). Ciclo externo fin de datos; primer ciclo de corte (mientras mismo día); dentro, segundo ciclo de corte (mientras mismo día y misma hora). Inicializar parciales al entrar a cada nivel; mostrar/acumular al salir de cada nivel refiriendo al “anterior”.
+
+## Errores típicos
+- Mostrar acumulados del “último” leído en lugar del grupo que recién terminó (clave anterior).
+- No hacer la segunda lectura al final del ciclo interno.
+- No inicializar contadores/acumuladores parciales al comenzar cada nivel de corte.
+- Aplicar corte sobre datos no ordenados por la clave de agrupación.

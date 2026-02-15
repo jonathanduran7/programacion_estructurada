@@ -1,0 +1,53 @@
+---
+description: Contenido oficial Unidad 1 — Algoritmos con colecciones y manejo de texto (strings). Material cátedra Programación Estructurada.
+globs: "**/*.c"
+alwaysApply: false
+---
+
+# Unidad 1 — Algoritmos con colecciones y manejo de texto (material cátedra)
+
+Referencia: *Unidad 1 – Algoritmos con Colecciones y Manejo de Texto (strings)*, material preparado por Dr. Ing. Pablo Martín Vera.
+
+## 1. Algoritmos con colecciones
+
+### 1.1 Máximos y mínimos múltiples
+- **Procedimiento en dos pasos:** (1) Determinar el máximo o mínimo del conjunto; (2) Volver a recorrer para contar repeticiones y posiciones.
+- Las posiciones mostradas suelen sumarse +1 para ser “más amigables” para el usuario.
+- Aplicable también a matrices: referencia en (0,0), doble for, luego segundo recorrido para ubicar repeticiones.
+
+### 1.2 Búsqueda secuencial
+- **Entradas:** vector, elemento a buscar, cantidad de elementos.
+- **Salida unificada:** posición si existe (0 ≤ pos ≤ cant), **-1** si no existe.
+- **Variables:** índice `i` y `pos` (inicializada en -1).
+- **Ciclo:** `while (pos == -1 && i < cantElem)`. Sale al encontrar el dato o al llegar al final.
+- Retorna `pos` (posición o -1).
+
+### 1.3 Carga sin valores repetidos
+- Por cada dato ingresado se busca si ya está en el vector (búsqueda sobre el tramo ya cargado).
+- **No se avanza `i`** hasta cargar un dato distinto a los ya cargados.
+- La función de búsqueda se llama con cantidad = `i` (elementos cargados hasta ese momento). Con `i = 0` retorna -1 (correcto: no hay duplicados).
+
+### 1.4 Ordenamiento
+- **Directos:** Burbujeo, selección, inserción. Adecuados para listas pequeñas.
+- **Indirectos (avanzados):** Shell, ordenación por mezcla; para vectores grandes.
+- **Selección:** buscar el menor (o mayor) en el tramo desordenado; intercambiar con variable **auxiliar** (asignación destructiva). Ciclo con n-1 pasadas; el último queda ordenado.
+- **Burbujeo:** comparar posiciones adyacentes e intercambiar. Ciclo externo = cantidad de pasadas; ciclo interno hasta `n-1-i` (cada pasada ordena un elemento al final). Para descendente se invierte la condición de intercambio.
+- **Burbujeo optimizado:** do-while; variable para “último intercambio” como límite del interno; si no hubo intercambios en una pasada, terminar.
+- **Vectores paralelos:** al intercambiar en un vector, intercambiar también en los vectores paralelos (misma variable auxiliar si mismo tipo; una por tipo si son distintos).
+
+## 2. Manejo de texto (strings)
+
+- String = vector de `char` con **fin de cadena `\0`**. Ej.: `char nombre[20];` — 19 caracteres útiles + `\0`.
+- **Lectura:** `scanf("%s", nombre)` — sin `&`; el espacio corta el ingreso. **gets** lee hasta enter pero no chequea límites (inseguro). **fgets(nombre, 20, stdin)** limita caracteres; puede guardar el `\n` (removerlo si molesta).
+- **Mostrar:** `printf("%s", nombre)` o `puts(nombre)` (agrega `\n`).
+- **Inicialización:** `char nombre[20] = "TEXTO";` — se agrega `\0` automático. Si el tamaño es insuficiente para el literal, no se guarda `\0` y deja de ser string válido.
+- **string.h:** `strlen`, `strcpy(destino, origen)`, `strcat(receptora, aAñadir)`, `strcmp(cad1, cad2)` (0 iguales, >0 cad1>cad2, <0 cad1<cad2), `strcmpi` (ignora mayúsculas/minúsculas).
+- **Vector de strings:** matriz de char; funciones de carga, mostrar, búsqueda secuencial y orden sobre vectores de strings.
+
+## 3. Errores típicos a corregir
+
+- Off-by-one en ordenamiento (límites `n-1`, `n-1-i`).
+- Intercambio sin variable auxiliar (asignación destructiva).
+- Búsqueda que no retorna -1 cuando no encuentra.
+- Avanzar `i` en carga sin duplicados antes de validar que el dato no esté repetido.
+- Usar `gets` sin advertir riesgo; no limitar lectura en `scanf` para strings (`%Ns` con N = tamaño-1).

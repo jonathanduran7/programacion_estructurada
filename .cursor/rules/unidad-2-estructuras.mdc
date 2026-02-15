@@ -1,0 +1,70 @@
+---
+description: Contenido oficial Unidad 2 — Estructuras de datos (struct). Material cátedra Programación Estructurada.
+globs: "**/*.c"
+alwaysApply: false
+---
+
+# Unidad 2 — Estructuras de datos (material cátedra)
+
+Referencia: *Unidad 2 – Estructuras de Datos*, material cátedra Programación Estructurada.
+
+## Objetivos
+Definir nuevos tipos de datos compuestos para guardar información de una misma entidad en una única variable. **Reemplazar vectores paralelos** con vectores de estructuras.
+
+## 1. Crear una estructura en C
+- Agrupar datos de una entidad (ej.: producto: código, descripción, precio) en un solo tipo.
+- Palabra reservada **struct**; cada dato dentro se llama **campo** o **miembro**; van entre llaves obligatorias.
+- **No olvidar el punto y coma (;) después de la llave de cierre.**
+- Se declara en el área de declaraciones globales (o dentro de una función si solo se usa ahí). La declaración del struct es un “molde”; las variables que lo usan ocupan memoria.
+- No repetir nombres de miembros dentro de la misma estructura.
+
+Ejemplo:
+```c
+struct PERSONA {
+    long int DNI;
+    char ApellNombre[41];
+    char Sexo;
+    int DiaNacimiento, MesNacimiento, AnioNacimiento;
+};
+struct PERSONA empleado;
+```
+
+## 2. Acceso a miembros
+- Sintaxis: **nombreVariable . nombreMiembro** (operador punto).
+- Ejemplo: `empleado.DNI`, `empleado.ApellNombre`, `scanf("%d", &empleado.DiaNacimiento)`.
+
+## 3. Inicialización
+- Respetar **orden y totalidad** de los campos entre llaves: `struct PERSONA empleado = {37234546, "Martinez, Julia", 'F', 18, 11, 1982};`
+- Respetar capacidades máximas de cada tipo (ej.: cadena de 41 incluyendo `\0`).
+
+## 4. Arrays (vectores) de estructuras
+- Ejemplo: `struct PERSONA vectEmpleado[10];`
+- Acceso: `vectEmpleado[i].DNI`, `vectEmpleado[i].ApellNombre`, etc. (primero índice del vector, luego campo con punto).
+- Reemplaza vectores paralelos: una sola variable por posición con todos los datos de la entidad.
+
+## 5. Estructuras anidadas
+- Una estructura puede tener como miembro otra estructura (ej.: FECHA dentro de PERSONA).
+- Acceso con tantos “.” como niveles: `empleado.Nacimiento.Dia`, `empleado.Nacimiento.Mes`, `empleado.Nacimiento.Anio`.
+- La estructura anidada debe estar declarada antes.
+
+## 6. Estructuras en funciones
+- **Parámetro:** `int esFechaCorrecta(struct FECHA fecha);` — se pasa por valor (copia).
+- **Retorno:** `struct FECHA IngresoDeFecha();` — la función devuelve una variable tipo struct.
+- En el cuerpo se usan los miembros con `.campo`.
+
+## 7. Copia de estructuras
+- La asignación entre variables del mismo struct copia todos los campos (según material).
+
+## 8. Estructuras con vectores como miembros
+- Un campo puede ser un array, ej.: `char ApellNombre[41];` dentro del struct.
+
+## 9. Otra forma de declarar
+- typedef u otras variantes según material (etiqueta y variables en una sola línea, etc.).
+
+## 10. Ordenar un vector de estructuras
+- Se aplica el mismo algoritmo de ordenamiento (selección o burbujeo) sobre el vector de struct; al intercambiar posiciones se intercambian **registros completos** (una sola auxiliar del tipo struct si todos los campos van juntos).
+
+## Errores típicos
+- Olvidar el `;` después de la llave de cierre del struct.
+- Usar `&` en scanf para un string del struct: `scanf("%s", empleado.ApellNombre)` (sin &).
+- Mezclar scanf numérico y luego char/string sin limpiar buffer (fflush(stdin) en el material; advertir que gets es inseguro y proponer fgets cuando corresponda).

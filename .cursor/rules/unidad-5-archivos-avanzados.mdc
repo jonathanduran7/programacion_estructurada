@@ -1,0 +1,56 @@
+---
+description: Contenido oficial Unidad 5 — Manejo avanzado de archivos (fseek, ftell, actualización, borrado, ABM). Material cátedra Programación Estructurada.
+globs: "**/*.c"
+alwaysApply: false
+---
+
+# Unidad 5 — Manejo avanzado de archivos (material cátedra)
+
+Referencia: *Unidad 5 – Manejo Avanzado de Archivos Binarios*, material cátedra Programación Estructurada.
+
+## Objetivos
+Acceso **no secuencial**; actualización directa sobre el archivo; borrado lógico y físico; ordenación y búsqueda en archivos; base para programas ABM (Alta, Baja, Modificación).
+
+## 1. Acceso discontinuo — modos de apertura
+- **r+b** — Lectura y escritura; archivo debe existir; posición inicial al comienzo.
+- **w+b** — Escritura y lectura; crea o sobreescribe; posición al comienzo.
+- **a+b** — Añadir y lectura; si existe no sobreescribe; **siempre escribe al final** aunque se use fseek. Posición inicial al comienzo para lectura.
+
+## 2. fseek — reposicionarse
+- `fseek(FILE *fp, long int despBytes, int referencia);`
+- **referencia:** 0 o SEEK_SET (desde inicio; desplazamiento ≥ 0); 1 o SEEK_CUR (desde posición actual; + o -); 2 o SEEK_END (desde final; desplazamiento ≤ 0).
+- Entre **cambio de modo** (lectura → escritura o escritura → lectura) es **necesario** fseek (aunque sea 0 bytes) o fflush para limpiar flags del FILE. Tras fread, para escribir en ese mismo registro: fseek hacia atrás un registro, luego fwrite. Tras fwrite, para leer: fseek o fflush antes del fread.
+
+## 3. ftell — posición actual
+- `long ftell(FILE *fp);` — retorna bytes desde el origen.
+- **Número de registro actual:** `ftell(fp) / sizeof(struct NombreRegistro)`.
+
+## 4. rewind
+- `void rewind(FILE *fp);` — vuelve al inicio y resetea flags (fin de archivo, error, etc.). Equivalente a fseek con 0 desde SEEK_SET.
+
+## 5. Otras funciones (stdio.h / stdlib.h)
+- **remove(nombreArchivo)** — elimina archivo; retorna 0 si OK.
+- **rename(nombreViejo, nombreNuevo)** — cambia nombre; retorna 0 si OK.
+
+## 6. Actualización sobre el mismo archivo
+- Abrir en **r+b**. Leer registro a registro; si corresponde modificar, actualizar la variable en memoria, hacer **fseek** hacia atrás un registro (ej.: `fseek(fp, -sizeof(struct X), SEEK_CUR)`), luego **fwrite** del registro. Entre lectura y escritura (y viceversa) usar fseek o fflush según corresponda.
+
+## 7. Cantidad de registros
+- Abrir en lectura; **fseek(fp, 0, SEEK_END)**; `cantReg = ftell(fp) / sizeof(struct Nombre);`.
+
+## 8. Borrado de registros
+- **Borrado lógico:** campo adicional en el registro (ej.: char estado 'S'/'N' o 0/1). Marcar como eliminado; en todas las lecturas/consultas ignorar los marcados. El archivo no achica; conviene proceso periódico de borrado físico para compactar.
+- **Borrado físico:** crear archivo temporal; copiar todos los registros **excepto** los a eliminar; reemplazar el original por el temporal (rename o borrar original y renombrar temporal). Opcional: archivo histórico donde se graban los registros borrados antes de eliminarlos.
+
+## 9. Ordenar un archivo
+- Generalmente leyendo a memoria (vector de estructuras), ordenar en memoria y volver a grabar (o generar archivo nuevo ordenado). Requiere conocer o limitar cantidad máxima de registros para el vector.
+
+## 10. Búsqueda en archivos
+- **Secuencial:** leer desde el inicio hasta encontrar el registro (o fin de archivo).
+- **Binaria:** archivo ordenado por clave; calcular posición media, fseek a esa posición, leer; comparar y seguir en mitad inferior o superior. Requiere registros de longitud fija y archivo ordenado por la clave de búsqueda.
+- **Archivos índice:** estructura auxiliar (índice) que permite localizar registros por clave sin recorrer todo el archivo de datos.
+
+## Errores típicos
+- Escribir después de leer (o leer después de escribir) sin fseek o fflush intermedio.
+- En a+b, asumir que fseek permite escribir en medio del archivo (la escritura sigue siendo al final).
+- No comprobar retorno de fread/fwrite para detectar errores.
